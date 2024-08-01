@@ -1,14 +1,11 @@
 ﻿using API.Data;
-using API.Entities;
-using Microsoft.AspNetCore.Http;
+using API.Model.Entities;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
 namespace API.Controllers
 {
-    [Route("api/[controller]")]
-    [ApiController]
-    public class UsersController(DataContext _dataContext) : ControllerBase
+    public class UsersController(DataContext _dataContext) : BaseController
     {
 
         [HttpGet]
