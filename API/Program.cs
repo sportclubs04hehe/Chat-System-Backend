@@ -1,5 +1,7 @@
 
 using API.Data;
+using API.Service;
+using API.Service.Impl;
 using Microsoft.EntityFrameworkCore;
 
 namespace API
@@ -17,6 +19,10 @@ namespace API
             {
                 otp.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnections"));
             });
+
+            builder.Services.AddCors();
+
+            builder.Services.AddScoped<ITokenService, TokenService>();
 
             var app = builder.Build();
 
