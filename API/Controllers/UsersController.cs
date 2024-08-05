@@ -1,12 +1,20 @@
 ﻿using API.Data;
 using API.Model.Entities;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
 namespace API.Controllers
 {
+    [Authorize]
     public class UsersController(DataContext _dataContext) : BaseController
     {
+        [AllowAnonymous]
+        [HttpGet("hi")]
+        public ActionResult<string> HelloWorld()
+        {
+            return Ok("Chào thế giới");
+        }
 
         [HttpGet]
         public async Task<ActionResult<IEnumerable<AppUser>>> GetAll()

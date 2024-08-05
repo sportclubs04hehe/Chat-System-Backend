@@ -1,8 +1,4 @@
-
-using API.Data;
-using API.Service;
-using API.Service.Impl;
-using Microsoft.EntityFrameworkCore;
+using API.Extensions;
 
 namespace API
 {
@@ -13,16 +9,8 @@ namespace API
             var builder = WebApplication.CreateBuilder(args);
 
             // Add services to the container.
-
-            builder.Services.AddControllers();
-            builder.Services.AddDbContext<DataContext>(otp =>
-            {
-                otp.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnections"));
-            });
-
-            builder.Services.AddCors();
-
-            builder.Services.AddScoped<ITokenService, TokenService>();
+            builder.Services.AddApplicationService(builder.Configuration);
+            builder.Services.AddIdentityService(builder.Configuration);
 
             var app = builder.Build();
 
@@ -30,6 +18,8 @@ namespace API
             app.UseCors(x => x.AllowAnyHeader().AllowAnyMethod().WithOrigins("http://localhost:4200", "https://localhost:4200"));
 
             app.UseHttpsRedirection();
+
+            app.UseAuthentication();
 
             app.UseAuthorization();
 
